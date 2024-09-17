@@ -45,5 +45,8 @@ if ingredients_list:
     time_to_insert= st.button('Submit Order')
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
+        import requests
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+        fv_df=st.dataframe(fruityvice_response.json(),use_container_width= True)
         
         st.success('Your Smoothie is ordered!',icon="✅")
