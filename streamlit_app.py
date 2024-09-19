@@ -19,10 +19,10 @@ cnx=st.connection("snowflake")
 session=cnx.session()
 
 
-#session = get_active_session()
-#my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED")==0).collect()
+session = get_active_session()
+my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED")==0).collect()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
-#st.dataframe(data=my_dataframe, use_container_width=True)
+st.dataframe(data=my_dataframe, use_container_width=True)
 
 ingredients_list=st.multiselect(
     "Choose up to 5 ingredients:"
@@ -44,12 +44,12 @@ if ingredients_list:
 
     st.write(my_insert_stmt)
     #st.write(name_of_order)
-    st.stop
+    #st.stop
     #st.write(my_insert_stmt)
     time_to_insert=st.button('Submit Order')
     if time_to_insert:
      session.sql(my_insert_stmt).collect()
-     #session.sql(name_of_order).collect()
+     session.sql(name_of_order).collect()
     
      st.success('Your Smoothie '+name_on_order+ ' is ordered!', icon="✅")
 
